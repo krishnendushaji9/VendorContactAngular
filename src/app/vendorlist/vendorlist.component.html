@@ -1,0 +1,60 @@
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h2>Vendor Contact List</h2><a [routerLink]="['insert']" class="btn btn-success" style="margin-left:800px" >Create </a> 
+        <button type="button" class="btn btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                [popoverMessage]="popoverMessageLogout" placement="right" (confirm)="confirmClicked = true"
+                (cancel)="cancelClicked=true" confirmButtonType="warning" cancelButtonType="info"
+                (click)="confirmClicked=false; cancelClicked=false " [appendToBody]="true"
+                (confirm)="logout()"  style="margin-left:800px">Logout</button>
+    </div>
+    <input class="form-control my-0 py-1" type="text" placeholder="Search"  [(ngModel)]="searchString" (ngModelChange)="search(searchString)"aria-label="Search">
+    <button (click)="search(searchString)" class="btn-info">Search</button>
+    <div class="panel-body" style="font-size: 20px">
+        <table class="table table-striped" style="font-size: 20px">
+            <thead>
+                <tr>
+                    <th >ID</th>
+                    <th >Vendor Name</th>
+                    <th >Vendor Address</th>
+                    <th >Vendor Location</th>
+                    <th >Vendor Service</th>
+                    <th >Vendor PinCode</th>
+                    <th >Contact Person</th>
+                    <th >Department</th>
+                    <th >Email</th>
+                    <th >Mobile Number</th>
+                    <th >Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let vendor of vendors | async | paginate: { itemsPerPage: 3, currentPage: p }; let i = index" >
+                    <td >{{vendor.vdId}}</td>
+                    <td >{{vendor.vdName}}</td>
+                    <td >{{vendor.vdAddr}}</td>
+                    <td >{{vendor.vdLocation}}</td>
+                    <td >{{vendor.vdService}}</td>
+                    <td >{{vendor.vdPin}}</td>
+                    <td >{{vendor.cpName}}</td>
+                    <td >{{vendor.cpDepartment}}</td>
+                    <td >{{vendor.cpEmail}}</td>
+                    <td >{{vendor.cpMobile}}</td>
+                    
+                    <td> <button type="button" class="btn btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                        [popoverMessage]="popoverMessage" placement="right" (confirm)="confirmClicked = true"
+                        (cancel)="cancelClicked=true" confirmButtonType="warning" cancelButtonType="info"
+                        (click)="confirmClicked=false; cancelClicked=false " [appendToBody]="true"
+                        (confirm)="deleteVendor(vendor.vnId)" style="margin-left: 10px">Disable</button>
+
+                        <button (click)="update(vendor.vdId)" class="btn btn-info" style="margin-left: 10px">Edit</button><br>
+                        
+                    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="margin-left: 300px;">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+</div>

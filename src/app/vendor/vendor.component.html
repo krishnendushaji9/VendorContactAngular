@@ -1,0 +1,58 @@
+
+    <div class="panel panel-primary">
+           
+        
+        <div class="panel-heading ">
+                <h2><b>Vendor List</b></h2><a [routerLink]="['addvendor']" class="btn btn-info" style="margin-left:800px">Create Vendor</a> 
+                <button type="button" class="btn btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                [popoverMessage]="popoverMessageLogout" placement="right" (confirm)="confirmClicked = true"
+                (cancel)="cancelClicked=true" confirmButtonType="warning" cancelButtonType="info"
+                (click)="confirmClicked=false; cancelClicked=false " [appendToBody]="true"
+                (confirm)="logout()"  style="margin-left:1000px">Logout</button>
+        </div>
+        <div class="panel-body" style="font-size: 400%">
+            <input class="form-control my-0 py-1" type="text" placeholder="Search"  [(ngModel)]="searchString" (ngModelChange)="search(searchString)"aria-label="Search">
+    <button (click)="search(searchString)" class="btn-info">Search</button>
+            <table class="table table-striped" style="font-size: 400%">
+                <thead style="font-size: 400%" > 
+                    <tr >
+                        <th style="font-size: 2%">Vendor Id</th>
+                        <th style="font-size: 2%">Vendor Name</th>
+                        <th style="font-size: 2%"> Service</th>
+                        <th style="font-size: 2%">Address</th>
+                        <th style="font-size: 2%">Location</th>
+                        <th style="font-size: 2%">Contact Person</th>
+                        <th style="font-size: 2%">Phone Number</th>
+                        <th style="font-size: 2%">Edit/Disable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let vendor of vendors | async | paginate: { itemsPerPage: 3, currentPage: p }; let i = index" style="font-size: 400%">
+ 
+                        <td style="font-size: 2%" >{{vendor.vnId}}</td>
+                        <td style="font-size: 2%">{{vendor.vnName}}</td>
+                        <td style="font-size: 2%">{{vendor.vnService}}</td>
+                        <td style="font-size: 2%">{{vendor.vnAddress}}</td>
+                        <td style="font-size: 2%">{{vendor.vnLocation}}</td> 
+                        <td style="font-size: 2%">{{vendor.name}}</td>
+                        <td style="font-size: 2%">{{vendor.phone}}</td>
+                        <td>
+                            <!-- <button (click)="vendorDetails(vendor.vnId)" class="btn btn-info">Details</button> -->
+                            <button (click)="updateVendor(vendor.vnId)" class="btn btn-warning" style="margin-left: 10px">Edit</button>
+                            <button type="button" class="btn btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                            [popoverMessage]="popoverMessage" placement="right" (confirm)="confirmClicked = true"
+                            (cancel)="cancelClicked=true" confirmButtonType="warning" cancelButtonType="info"
+                            (click)="confirmClicked=false; cancelClicked=false " [appendToBody]="true"
+                            (confirm)="deleteVendor(vendor.vnId)" style="margin-left: 10px">Delete</button>
+                            
+                        
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-left: 300px;">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+              </div>
+        
+    </div>
